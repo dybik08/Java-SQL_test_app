@@ -60,7 +60,7 @@ public class OknoSQL extends javax.swing.JFrame {
 
            while(rs.next())
            {
-            user = new User(rs.getInt("idEmployee_info"),rs.getString("imie"),rs.getString("nazwisko"),rs.getInt("age"));
+            user = new User(rs.getInt("idEmployee_info"),rs.getString("imie"),rs.getString("nazwisko"),rs.getInt("age"), rs.getInt("zarobki"));
                usersList.add(user);
            }
 
@@ -75,13 +75,14 @@ public class OknoSQL extends javax.swing.JFrame {
    {
        ArrayList<User> list = getUsersList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Users.getModel();
-       Object[] row = new Object[4];
+       Object[] row = new Object[5];
        for(int i = 0; i < list.size(); i++)
        {
            row[0] = list.get(i).getId();
            row[1] = list.get(i).getFirstName();
            row[2] = list.get(i).getLastNAme();
            row[3] = list.get(i).getAge();
+           row[4] = list.get(i).getZarobki();
            
            model.addRow(row);
        }
@@ -126,10 +127,12 @@ public class OknoSQL extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jTextField_wiek = new javax.swing.JTextField();
         jTextField_nazwisko = new javax.swing.JTextField();
         jTextField_imie = new javax.swing.JTextField();
         jTextField_id = new javax.swing.JTextField();
+        jTextField_zarobki = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_Display_Users = new javax.swing.JTable();
         jButton_Insert = new javax.swing.JButton();
@@ -146,12 +149,14 @@ public class OknoSQL extends javax.swing.JFrame {
 
         jLabel8.setText("Wiek");
 
+        jLabel9.setText("Zarobki");
+
         jTable_Display_Users.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Imie", "Nazwisko", "Wiek"
+                "ID", "Imie", "Nazwisko", "Wiek", "Zarobki"
             }
         ));
         jTable_Display_Users.setName(""); // NOI18N
@@ -194,15 +199,18 @@ public class OknoSQL extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel7)
+
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel8))
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel9))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField_nazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                             .addComponent(jTextField_imie)
                             .addComponent(jTextField_id)
-                            .addComponent(jTextField_wiek)))
+                            .addComponent(jTextField_wiek)
+                            .addComponent(jTextField_zarobki)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jButton_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_Insert, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -232,6 +240,10 @@ public class OknoSQL extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jTextField_wiek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                             .addComponent(jLabel9)
+                             .addComponent(jTextField_zarobki, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jButton_Insert)
                         .addGap(18, 18, 18)
@@ -270,18 +282,19 @@ public class OknoSQL extends javax.swing.JFrame {
         jTextField_imie.setText(model.getValueAt(i, 1).toString());
         jTextField_nazwisko.setText(model.getValueAt(i, 2).toString());
         jTextField_wiek.setText(model.getValueAt(i, 3).toString());
+        jTextField_zarobki.setText(model.getValueAt(i,4).toString());
     }//GEN-LAST:event_jTable_Display_UsersMouseClicked
 
     private void jButton_InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InsertActionPerformed
          
-        String query = "INSERT INTO `employee_info`(`imie`, `nazwisko`, `age`) VALUES ('"+jTextField_imie.getText()+"','"+jTextField_nazwisko.getText()+"',"+jTextField_wiek.getText()+")";
+        String query = "INSERT INTO `employee_info`(`imie`, `nazwisko`, `age`, 'zarobki') VALUES ('"+jTextField_imie.getText()+"','"+jTextField_nazwisko.getText()+"',"+jTextField_wiek.getText()+"',"+jTextField_zarobki.getText()+")";
         
         executeSQLQuery(query, "Inserted");
     }//GEN-LAST:event_jButton_InsertActionPerformed
 
     private void jButton_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_updateActionPerformed
          
-        String query = "UPDATE `employee_info` SET `imie`='"+jTextField_imie.getText()+"',`nazwisko`='"+jTextField_nazwisko.getText()+"',`age`="+jTextField_wiek.getText()+" WHERE `idEmployee_info` = "+jTextField_id.getText();
+        String query = "UPDATE `employee_info` SET `imie`='"+jTextField_imie.getText()+"',`nazwisko`='"+jTextField_nazwisko.getText()+"',`age`="+jTextField_wiek.getText()+"','zarobki'="+jTextField_zarobki.getText()+" WHERE `idEmployee_info` = "+jTextField_id.getText();
        executeSQLQuery(query, "Updated");
     }//GEN-LAST:event_jButton_updateActionPerformed
 
@@ -334,6 +347,7 @@ public class OknoSQL extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable_Display_Users;
@@ -341,5 +355,6 @@ public class OknoSQL extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_imie;
     private javax.swing.JTextField jTextField_nazwisko;
     private javax.swing.JTextField jTextField_wiek;
+    private javax.swing.JTextField jTextField_zarobki;
     // End of variables declaration//GEN-END:variables
 }

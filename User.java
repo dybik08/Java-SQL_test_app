@@ -10,13 +10,15 @@ public class User
     private String firstName;
     private String lastName;
     private int age;
+    private int zarobki;
     
-    public User(int ID, String FirstName, String LastName, int Age)
+    public User(int ID, String FirstName, String LastName, int Age, int Zarobki)
     {
         this.id = ID;
         this.firstName = FirstName;
         this.lastName = LastName;
         this.age = Age;
+        this.zarobki = Zarobki;
     }
     
      public int getId()
@@ -38,5 +40,7 @@ public class User
     {
         return age;
     }
+
+    public int getZarobki() {return zarobki;}
     
 }
